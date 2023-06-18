@@ -14,7 +14,10 @@
   "devDependencies": {
     "eslint": "^8.42.0",
     "webpack": "^5.87.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^2.0.22"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
