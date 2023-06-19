@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
-const { ERROR_BAD_REQUEST,
+const {
+  ERROR_BAD_REQUEST,
   ERROR_NOT_FOUND,
   ERROR_SERVER,
 } = require('../utils/status');
 
 const { ValidationError, CastError } = mongoose.Error;
 
-// Получение списка пользователей
+/*Получение списка пользователей*/
 const getUsers = (req, res) => {
   User.find({})
     .then((userList) => res.send({ data: userList }))
@@ -18,7 +19,7 @@ const getUsers = (req, res) => {
     });
 };
 
-// Получение пользователя по ID
+/*Получение пользователя по ID*/
 const getUserId = (req, res) => {
   User.findById(req.params.userId)
     .then((selectedUser) => {
@@ -37,7 +38,7 @@ const getUserId = (req, res) => {
     });
 };
 
-// Создание пользователя
+/*Создание пользователя*/
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
@@ -51,7 +52,7 @@ const createUser = (req, res) => {
     });
 };
 
-// Обновление профиля пользователя
+/*Обновление профиля пользователя*/
 const updateUserData = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, {
@@ -68,7 +69,7 @@ const updateUserData = (req, res) => {
     });
 };
 
-// Обновление аватара пользователя
+/*Обновление аватара пользователя*/
 const updateUserAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, {
