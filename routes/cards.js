@@ -8,11 +8,11 @@ const {
   removeLike,
 } = require('../controllers/cards');
 
-/*возвращает все карточки/создать/удалить*/
+/* возвращает все карточки/создать/удалить */
 cardRouter.get('/', getCards);
 cardRouter.post('/', createCard);
 cardRouter.delete('/:cardId', deleteCard);
-/*Поставить/ убрать лайк*/
+/* Поставить/ убрать лайк */
 cardRouter.put('/:cardId/likes', likeCard);
 cardRouter.delete('/:cardId/likes', removeLike);
 

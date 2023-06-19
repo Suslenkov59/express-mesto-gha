@@ -10,7 +10,7 @@ const {
   ERROR_SERVER,
 } = require('../utils/status');
 
-/*Получение списка карточек*/
+/* Получение списка карточек */
 const getCards = (req, res) => {
   Card.find({})
     .populate(['owner', 'likes'])
@@ -22,7 +22,7 @@ const getCards = (req, res) => {
     });
 };
 
-/*Создание карточки*/
+/* Создание карточки */
 const createCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
@@ -36,7 +36,7 @@ const createCard = (req, res) => {
     });
 };
 
-/*Удаление карточки*/
+/* Удаление карточки */
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((selectedCard) => {
@@ -55,12 +55,12 @@ const deleteCard = (req, res) => {
     });
 };
 
-/*Like карточки*/
+/* Like карточки */
 const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: {likes: req.user._id }},
-    {new: true},
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
   )
     .then((selectedCard) => {
       if (selectedCard) {
@@ -78,16 +78,16 @@ const likeCard = (req, res) => {
     });
 };
 
-/*Dislike карточки*/
+/* Dislike карточки */
 const removeLike = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $pull: {likes: req.user._id }},
+    { $pull: { likes: req.user._id } },
     { new: true },
   )
     .then((selectedCard) => {
       if (selectedCard) {
-        res.send({data: selectedCard});
+        res.send({ data: selectedCard });
       } else {
         res.status(ERROR_NOT_FOUND).send({ message: 'Карточка по указанному _id не найдена' });
       }

@@ -8,11 +8,11 @@ const {
   updateUserAvatar,
 } = require('../controllers/users');
 
-/*возвращает всех пользователей/по _id/создать*/
+/* возвращает всех пользователей/по _id/создать */
 userRouter.get('/', getUsers);
 userRouter.get('/:userId', getUserId);
 userRouter.post('/', createUser);
-/*Обновить профиль/аватар*/
+/* Обновить профиль/аватар */
 userRouter.patch('/me', updateUserData);
 userRouter.patch('/me/avatar', updateUserAvatar);
 
