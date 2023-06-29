@@ -3,17 +3,22 @@ const userRouter = require('express').Router();
 const {
   getUsers,
   getUserId,
-  createUser,
   updateUserData,
   updateUserAvatar,
+  getUserProfile
 } = require('../controllers/users');
+
+/* Валидация */
+const {
+  validateUserId, validateUserUpdate, validateUserAvatar,
+} = require('../utils/data-validation');
 
 /* возвращает всех пользователей/по _id/создать */
 userRouter.get('/', getUsers);
-userRouter.get('/:userId', getUserId);
-userRouter.post('/', createUser);
+userRouter.get('/me', getUserProfile);
+userRouter.get('/:userId', validateUserId, getUserId);
 /* Обновить профиль/аватар */
-userRouter.patch('/me', updateUserData);
-userRouter.patch('/me/avatar', updateUserAvatar);
+userRouter.patch('/me', validateUserUpdate, updateUserData);
+userRouter.patch('/me/avatar', validateUserAvatar, updateUserAvatar);
 
 module.exports = userRouter;

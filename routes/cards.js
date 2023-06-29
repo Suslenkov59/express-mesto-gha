@@ -8,12 +8,16 @@ const {
   removeLike,
 } = require('../controllers/cards');
 
+const {
+  validateCreateCard, validateCardId,
+} = require('../utils/data-validation');
+
 /* возвращает все карточки/создать/удалить */
 cardRouter.get('/', getCards);
-cardRouter.post('/', createCard);
-cardRouter.delete('/:cardId', deleteCard);
+cardRouter.post('/', validateCreateCard, createCard);
+cardRouter.delete('/:cardId', validateCardId, deleteCard);
 /* Поставить/ убрать лайк */
-cardRouter.put('/:cardId/likes', likeCard);
-cardRouter.delete('/:cardId/likes', removeLike);
+cardRouter.put('/:cardId/likes', validateCardId, likeCard);
+cardRouter.delete('/:cardId/likes', validateCardId, removeLike);
 
 module.exports = cardRouter;

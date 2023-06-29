@@ -1,30 +1,36 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const { errors } = require('celebrate');
 
 const { PORT = 3000 } = process.env;
-const { ERROR_NOT_FOUND } = require('./utils/status');
-
 const app = express();
 
-const userRouter = require('./routes/users');
-const cardRouter = require('./routes/cards');
+const mainRouter = require('./routes/index');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+
+const responseHandler = require('./middlewares/response-handler');
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
+// Автоматически проставлять заголовки безопасности
 app.use(express.json());
+app.use(limiter);
+app.use(helmet());
 
-app.use((req, res, next) => {
-  req.user = { _id: '648f7fcf7c73185e6127c6c2' };
-  next();
-});
+// Основные рабочие роуты
+app.use(mainRouter);
 
-app.use('/cards', cardRouter);
-app.use('/users', userRouter);
+// Обработчик ответов
+app.use(errors());
+app.use(responseHandler);
 
-app.use('*', (req, res) => {
-  res.status(ERROR_NOT_FOUND).send({ message: 'Запрашиваемая страница не найдена' });
-});
-
+// Служебная информация: адрес запущенного сервера
 app.listen(PORT, () => {
   console.log(`Адрес сервера — ${PORT}`);
 });
