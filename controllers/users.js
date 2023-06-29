@@ -117,5 +117,5 @@ module.exports = {
   updateUserData,
   updateUserAvatar,
   authorizeUser,
-  getUserProfile
+  getUserProfile,
 };

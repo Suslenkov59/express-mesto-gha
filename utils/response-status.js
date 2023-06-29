@@ -7,4 +7,3 @@ module.exports = {
   SUCCESS_CREATED,
   DUPLICATE_OBJECT,
 };
-

@@ -5,7 +5,7 @@ const {
   getUserId,
   updateUserData,
   updateUserAvatar,
-  getUserProfile
+  getUserProfile,
 } = require('../controllers/users');
 
 /* Валидация */
